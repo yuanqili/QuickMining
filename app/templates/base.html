@@ -1,0 +1,20 @@
+<html>
+  <head>
+    {% if title %}
+      <title>{{ title }} - ModernFlask</title>
+    {% else %}
+      <title>Welcome to ModernFlask</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>
+      ModernFlask:
+      <a href={{ url_for('index') }}>Home</a>
+      <a href={{ url_for('login') }}>Login</a>
+      <a href={{ url_for('logout') }}>Logout</a>
+    </div>
+    <hr>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
