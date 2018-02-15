@@ -20,17 +20,35 @@ class RegistrationForm(FlaskForm):
                               validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
-    # When you add any methods that match the pattern `validate_<field_name>`,
-    # WTForms takes those as custom validators and invokes them in addition to
-    # the stock validators.
-
     def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user:
+        if User.query.filter_by(username=username.data).first():
             raise ValidationError('Please use a different username.')
 
     def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user:
+        if User.query.filter_by(email=email.data).first():
             raise ValidationError('Please use a different email address.')
 
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+    def __init__(self, original_username, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.original_username = original_username
+
+    def validate_username(self, username):
+        if username.data != self.original_username:
+            if User.query.filter_by(username=username.data).first():
+                raise ValidationError('Please use a different username.')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request password reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset password')
