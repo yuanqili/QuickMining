@@ -10,3 +10,15 @@ def make_shell_context():
         'Level': Level,
         'Activity': Activity,
     }
+
+
+@app.cli.command()
+def routes():
+    from urllib.parse import unquote
+    output = []
+    for rule in app.url_map.iter_rules():
+        methods = ','.join(rule.methods)
+        line = unquote("{:20s} {:20s} {}".format(rule.endpoint, methods, rule))
+        output.append(line)
+    for line in sorted(output):
+        print(line)

@@ -1,0 +1,869 @@
+{% extends "production/base.html" %}
+
+{% block content %}
+
+  <div class="page-title">
+    <div class="title_left">
+      <h2>Home</h2>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <iframe scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: static; visibility: visible; display: block; width: 100%; height: 480px; padding: 0px; border: none; max-width: 100%; min-width: 400px; min-height: 300px; margin-top: 10px; margin-bottom: 10px;" src="https://charts.bitcoin.com/embed/price"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Pools</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Perenue per 1TH/s</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <canvas id="mybarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Mining server info</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>SHA-256</th>
+              <th>Current Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Hash rate</td>
+              <td>0.1 TH/s</td>
+            </tr>
+            <tr>
+              <td>Approximate profit</td>
+              <td>15000 STC/d</td>
+            </tr>
+            <tr>
+              <td>Affiliate bonus</td>
+              <td>2%</td>
+            </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Revenue forecast</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th></th>
+              <th>BTC</th>
+              <th>USD</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>1 week</td>
+              <td>0.00000909</td>
+              <td>0.09</td>
+            </tr>
+            <tr>
+              <td>1 day</td>
+              <td>0.00006363</td>
+              <td>0.64</td>
+            </tr>
+            <tr>
+              <td>1 month</td>
+              <td>0.0002727</td>
+              <td>2.74</td>
+            </tr>
+            <tr>
+              <td>6 month</td>
+              <td>0.0016362</td>
+              <td>16.44</td>
+            </tr>
+            <tr>
+              <td>1 year</td>
+              <td>0.00331785</td>
+              <td>33.35</td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{##}
+{#  <script>#}
+{#  window.chartColors = {#}
+{#    red: 'rgb(255, 99, 132)',#}
+{#    orange: 'rgb(255, 159, 64)',#}
+{#    yellow: 'rgb(255, 205, 86)',#}
+{#    green: 'rgb(75, 192, 192)',#}
+{#    blue: 'rgb(54, 162, 235)',#}
+{#    purple: 'rgb(153, 102, 255)',#}
+{#    grey: 'rgb(201, 203, 207)'#}
+{#  };#}
+{##}
+{#  (function(global) {#}
+{#    var Months = [#}
+{#      'January',#}
+{#      'February',#}
+{#      'March',#}
+{#      'April',#}
+{#      'May',#}
+{#      'June',#}
+{#      'July',#}
+{#      'August',#}
+{#      'September',#}
+{#      'October',#}
+{#      'November',#}
+{#      'December'#}
+{#    ];#}
+{##}
+{#    var COLORS = [#}
+{#      '#4dc9f6',#}
+{#      '#f67019',#}
+{#      '#f53794',#}
+{#      '#537bc4',#}
+{#      '#acc236',#}
+{#      '#166a8f',#}
+{#      '#00a950',#}
+{#      '#58595b',#}
+{#      '#8549ba'#}
+{#    ];#}
+{##}
+{#    var Samples = global.Samples || (global.Samples = {});#}
+{#    var Color = global.Color;#}
+{##}
+{#    Samples.utils = {#}
+{#      // Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/#}
+{#      srand: function(seed) {#}
+{#        this._seed = seed;#}
+{#      },#}
+{##}
+{#      rand: function(min, max) {#}
+{#        var seed = this._seed;#}
+{#        min = min === undefined ? 0 : min;#}
+{#        max = max === undefined ? 1 : max;#}
+{#        this._seed = (seed * 9301 + 49297) % 233280;#}
+{#        return min + (this._seed / 233280) * (max - min);#}
+{#      },#}
+{##}
+{#      numbers: function(config) {#}
+{#        var cfg = config || {};#}
+{#        var min = cfg.min || 0;#}
+{#        var max = cfg.max || 1;#}
+{#        var from = cfg.from || [];#}
+{#        var count = cfg.count || 8;#}
+{#        var decimals = cfg.decimals || 8;#}
+{#        var continuity = cfg.continuity || 1;#}
+{#        var dfactor = Math.pow(10, decimals) || 0;#}
+{#        var data = [];#}
+{#        var i, value;#}
+{##}
+{#        for (i = 0; i < count; ++i) {#}
+{#          value = (from[i] || 0) + this.rand(min, max);#}
+{#          if (this.rand() <= continuity) {#}
+{#            data.push(Math.round(dfactor * value) / dfactor);#}
+{#          } else {#}
+{#            data.push(null);#}
+{#          }#}
+{#        }#}
+{##}
+{#        return data;#}
+{#      },#}
+{##}
+{#      labels: function(config) {#}
+{#        var cfg = config || {};#}
+{#        var min = cfg.min || 0;#}
+{#        var max = cfg.max || 100;#}
+{#        var count = cfg.count || 8;#}
+{#        var step = (max - min) / count;#}
+{#        var decimals = cfg.decimals || 8;#}
+{#        var dfactor = Math.pow(10, decimals) || 0;#}
+{#        var prefix = cfg.prefix || '';#}
+{#        var values = [];#}
+{#        var i;#}
+{##}
+{#        for (i = min; i < max; i += step) {#}
+{#          values.push(prefix + Math.round(dfactor * i) / dfactor);#}
+{#        }#}
+{##}
+{#        return values;#}
+{#      },#}
+{##}
+{#      months: function(config) {#}
+{#        var cfg = config || {};#}
+{#        var count = cfg.count || 12;#}
+{#        var section = cfg.section;#}
+{#        var values = [];#}
+{#        var i, value;#}
+{##}
+{#        for (i = 0; i < count; ++i) {#}
+{#          value = Months[Math.ceil(i) % 12];#}
+{#          values.push(value.substring(0, section));#}
+{#        }#}
+{##}
+{#        return values;#}
+{#      },#}
+{##}
+{#      color: function(index) {#}
+{#        return COLORS[index % COLORS.length];#}
+{#      },#}
+{##}
+{#      transparentize: function(color, opacity) {#}
+{#        var alpha = opacity === undefined ? 0.5 : 1 - opacity;#}
+{#        return Color(color).alpha(alpha).rgbString();#}
+{#      }#}
+{#    };#}
+{##}
+{#    // DEPRECATED#}
+{#    window.randomScalingFactor = function() {#}
+{#      return Math.round(Samples.utils.rand(-100, 100));#}
+{#    };#}
+{##}
+{#    // INITIALIZATION#}
+{##}
+{#    Samples.utils.srand(Date.now());#}
+{##}
+{#    // Google Analytics#}
+{#    /* eslint-disable */#}
+{#    if (document.location.hostname.match(/^(www\.)?chartjs\.org$/)) {#}
+{#      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){#}
+{#      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),#}
+{#      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)#}
+{#      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');#}
+{#      ga('create', 'UA-28909194-3', 'auto');#}
+{#      ga('send', 'pageview');#}
+{#    }#}
+{#    /* eslint-enable */#}
+{##}
+{#  }(this));#}
+{##}
+{#  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];#}
+{#  var config = {#}
+{#      type: 'line',#}
+{#      data: {#}
+{#          labels: ["January", "February", "March", "April", "May", "June", "July"],#}
+{#          datasets: [{#}
+{#              label: "My First dataset",#}
+{#              backgroundColor: window.chartColors.red,#}
+{#              borderColor: window.chartColors.red,#}
+{#              data: [#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor()#}
+{#              ],#}
+{#              fill: false,#}
+{#          }, {#}
+{#              label: "My Second dataset",#}
+{#              fill: false,#}
+{#              backgroundColor: window.chartColors.blue,#}
+{#              borderColor: window.chartColors.blue,#}
+{#              data: [#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor(),#}
+{#                  randomScalingFactor()#}
+{#              ],#}
+{#          }]#}
+{#      },#}
+{#      options: {#}
+{#          responsive: true,#}
+{#          title:{#}
+{#              display:true,#}
+{#              text:'Chart.js Line Chart'#}
+{#          },#}
+{#          tooltips: {#}
+{#              mode: 'index',#}
+{#              intersect: false,#}
+{#          },#}
+{#          hover: {#}
+{#              mode: 'nearest',#}
+{#              intersect: true#}
+{#          },#}
+{#          scales: {#}
+{#              xAxes: [{#}
+{#                  display: true,#}
+{#                  scaleLabel: {#}
+{#                      display: true,#}
+{#                      labelString: 'Month'#}
+{#                  }#}
+{#              }],#}
+{#              yAxes: [{#}
+{#                  display: true,#}
+{#                  scaleLabel: {#}
+{#                      display: true,#}
+{#                      labelString: 'Value'#}
+{#                  }#}
+{#              }]#}
+{#          }#}
+{#      }#}
+{#  };#}
+{##}
+{#  window.onload = function() {#}
+{#      var ctx = document.getElementById("canvas").getContext("2d");#}
+{#      window.myLine = new Chart(ctx, config);#}
+{#  };#}
+{#  </script>#}
+{##}
+{#  <div class="row">#}
+{##}
+{#    <div class="clearfix"></div>#}
+{##}
+{#    <div class="row">#}
+{#      <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#        <div class="x_panel">#}
+{#          <div class="x_title">#}
+{#            <h2>Pie Graph Chart#}
+{#              <small>Sessions</small>#}
+{#            </h2>#}
+{#            <ul class="nav navbar-right panel_toolbox">#}
+{#              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#              </li>#}
+{#              <li class="dropdown">#}
+{#                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                    class="fa fa-wrench"></i></a>#}
+{#                <ul class="dropdown-menu" role="menu">#}
+{#                  <li><a href="#">Settings 1</a>#}
+{#                  </li>#}
+{#                  <li><a href="#">Settings 2</a>#}
+{#                  </li>#}
+{#                </ul>#}
+{#              </li>#}
+{#              <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#              </li>#}
+{#            </ul>#}
+{#            <div class="clearfix"></div>#}
+{#          </div>#}
+{#          <div class="x_content">#}
+{#            <canvas id="pieChart"></canvas>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#        <div class="x_panel">#}
+{#          <div class="x_title">#}
+{#            <h2>Pie Area Graph#}
+{#              <small>Sessions</small>#}
+{#            </h2>#}
+{#            <ul class="nav navbar-right panel_toolbox">#}
+{#              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#              </li>#}
+{#              <li class="dropdown">#}
+{#                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                    class="fa fa-wrench"></i></a>#}
+{#                <ul class="dropdown-menu" role="menu">#}
+{#                  <li><a href="#">Settings 1</a>#}
+{#                  </li>#}
+{#                  <li><a href="#">Settings 2</a>#}
+{#                  </li>#}
+{#                </ul>#}
+{#              </li>#}
+{#              <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#              </li>#}
+{#            </ul>#}
+{#            <div class="clearfix"></div>#}
+{#          </div>#}
+{#          <div class="x_content">#}
+{#            <canvas id="polarArea"></canvas>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#    <div class="clearfix"></div>#}
+{##}
+{#    <div class="col-md-3 col-sm-6 col-xs-12"></div>#}
+{#    <div class="col-md-3 col-sm-6 col-xs-12"></div>#}
+{#    <div class="col-md-3 col-sm-6 col-xs-12"></div>#}
+{#    <div class="col-md-3 col-sm-6 col-xs-12"></div>#}
+{##}
+{#    <div class="clearfix"></div>#}
+{##}
+{#    <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#      <div class="x_panel">#}
+{#        <div class="x_title">#}
+{#          <h2>Basic Tables#}
+{#            <small>basic table subtitle</small>#}
+{#          </h2>#}
+{#          <ul class="nav navbar-right panel_toolbox">#}
+{#            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#            </li>#}
+{#            <li class="dropdown">#}
+{#              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                  class="fa fa-wrench"></i></a>#}
+{#              <ul class="dropdown-menu" role="menu">#}
+{#                <li><a href="#">Settings 1</a>#}
+{#                </li>#}
+{#                <li><a href="#">Settings 2</a>#}
+{#                </li>#}
+{#              </ul>#}
+{#            </li>#}
+{#            <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="clearfix"></div>#}
+{#        </div>#}
+{#        <div class="x_content">#}
+{##}
+{#          <table class="table">#}
+{#            <thead>#}
+{#            <tr>#}
+{#              <th>#</th>#}
+{#              <th>First Name</th>#}
+{#              <th>Last Name</th>#}
+{#              <th>Username</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            <tr>#}
+{#              <th scope="row">1</th>#}
+{#              <td>Mark</td>#}
+{#              <td>Otto</td>#}
+{#              <td>@mdo</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">2</th>#}
+{#              <td>Jacob</td>#}
+{#              <td>Thornton</td>#}
+{#              <td>@fat</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">3</th>#}
+{#              <td>Larry</td>#}
+{#              <td>the Bird</td>#}
+{#              <td>@twitter</td>#}
+{#            </tr>#}
+{#            </tbody>#}
+{#          </table>#}
+{##}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#      <div class="x_panel">#}
+{#        <div class="x_title">#}
+{#          <h2>Stripped table#}
+{#            <small>Stripped table subtitle</small>#}
+{#          </h2>#}
+{#          <ul class="nav navbar-right panel_toolbox">#}
+{#            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#            </li>#}
+{#            <li class="dropdown">#}
+{#              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                  class="fa fa-wrench"></i></a>#}
+{#              <ul class="dropdown-menu" role="menu">#}
+{#                <li><a href="#">Settings 1</a>#}
+{#                </li>#}
+{#                <li><a href="#">Settings 2</a>#}
+{#                </li>#}
+{#              </ul>#}
+{#            </li>#}
+{#            <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="clearfix"></div>#}
+{#        </div>#}
+{#        <div class="x_content">#}
+{##}
+{#          <table class="table table-striped">#}
+{#            <thead>#}
+{#            <tr>#}
+{#              <th>#</th>#}
+{#              <th>First Name</th>#}
+{#              <th>Last Name</th>#}
+{#              <th>Username</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            <tr>#}
+{#              <th scope="row">1</th>#}
+{#              <td>Mark</td>#}
+{#              <td>Otto</td>#}
+{#              <td>@mdo</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">2</th>#}
+{#              <td>Jacob</td>#}
+{#              <td>Thornton</td>#}
+{#              <td>@fat</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">3</th>#}
+{#              <td>Larry</td>#}
+{#              <td>the Bird</td>#}
+{#              <td>@twitter</td>#}
+{#            </tr>#}
+{#            </tbody>#}
+{#          </table>#}
+{##}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#    <div class="clearfix"></div>#}
+{##}
+{#    <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#      <div class="x_panel">#}
+{#        <div class="x_title">#}
+{#          <h2>Hover rows#}
+{#            <small>Try hovering over the rows</small>#}
+{#          </h2>#}
+{#          <ul class="nav navbar-right panel_toolbox">#}
+{#            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#            </li>#}
+{#            <li class="dropdown">#}
+{#              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                  class="fa fa-wrench"></i></a>#}
+{#              <ul class="dropdown-menu" role="menu">#}
+{#                <li><a href="#">Settings 1</a>#}
+{#                </li>#}
+{#                <li><a href="#">Settings 2</a>#}
+{#                </li>#}
+{#              </ul>#}
+{#            </li>#}
+{#            <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="clearfix"></div>#}
+{#        </div>#}
+{#        <div class="x_content">#}
+{#          <table class="table table-hover">#}
+{#            <thead>#}
+{#            <tr>#}
+{#              <th>#</th>#}
+{#              <th>First Name</th>#}
+{#              <th>Last Name</th>#}
+{#              <th>Username</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            <tr>#}
+{#              <th scope="row">1</th>#}
+{#              <td>Mark</td>#}
+{#              <td>Otto</td>#}
+{#              <td>@mdo</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">2</th>#}
+{#              <td>Jacob</td>#}
+{#              <td>Thornton</td>#}
+{#              <td>@fat</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">3</th>#}
+{#              <td>Larry</td>#}
+{#              <td>the Bird</td>#}
+{#              <td>@twitter</td>#}
+{#            </tr>#}
+{#            </tbody>#}
+{#          </table>#}
+{##}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#      <div class="x_panel">#}
+{#        <div class="x_title">#}
+{#          <h2>Boardered table#}
+{#            <small>Bordered table subtitle</small>#}
+{#          </h2>#}
+{#          <ul class="nav navbar-right panel_toolbox">#}
+{#            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#            </li>#}
+{#            <li class="dropdown">#}
+{#              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                  class="fa fa-wrench"></i></a>#}
+{#              <ul class="dropdown-menu" role="menu">#}
+{#                <li><a href="#">Settings 1</a>#}
+{#                </li>#}
+{#                <li><a href="#">Settings 2</a>#}
+{#                </li>#}
+{#              </ul>#}
+{#            </li>#}
+{#            <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="clearfix"></div>#}
+{#        </div>#}
+{#        <div class="x_content">#}
+{##}
+{#          <table class="table table-bordered">#}
+{#            <thead>#}
+{#            <tr>#}
+{#              <th>#</th>#}
+{#              <th>First Name</th>#}
+{#              <th>Last Name</th>#}
+{#              <th>Username</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            <tr>#}
+{#              <th scope="row">1</th>#}
+{#              <td>Mark</td>#}
+{#              <td>Otto</td>#}
+{#              <td>@mdo</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">2</th>#}
+{#              <td>Jacob</td>#}
+{#              <td>Thornton</td>#}
+{#              <td>@fat</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <th scope="row">3</th>#}
+{#              <td>Larry</td>#}
+{#              <td>the Bird</td>#}
+{#              <td>@twitter</td>#}
+{#            </tr>#}
+{#            </tbody>#}
+{#          </table>#}
+{##}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#    <div class="clearfix"></div>#}
+{##}
+{#    <div class="col-md-12 col-sm-12 col-xs-12">#}
+{#      <div class="x_panel">#}
+{#        <div class="x_title">#}
+{#          <h2>Table design#}
+{#            <small>Custom design</small>#}
+{#          </h2>#}
+{#          <ul class="nav navbar-right panel_toolbox">#}
+{#            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>#}
+{#            </li>#}
+{#            <li class="dropdown">#}
+{#              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i#}
+{#                  class="fa fa-wrench"></i></a>#}
+{#              <ul class="dropdown-menu" role="menu">#}
+{#                <li><a href="#">Settings 1</a>#}
+{#                </li>#}
+{#                <li><a href="#">Settings 2</a>#}
+{#                </li>#}
+{#              </ul>#}
+{#            </li>#}
+{#            <li><a class="close-link"><i class="fa fa-close"></i></a>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="clearfix"></div>#}
+{#        </div>#}
+{##}
+{#        <div class="x_content">#}
+{##}
+{#          <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>#}
+{##}
+{#          <div class="table-responsive">#}
+{#            <table class="table table-striped jambo_table bulk_action">#}
+{#              <thead>#}
+{#              <tr class="headings">#}
+{#                <th>#}
+{#                  <input type="checkbox" id="check-all" class="flat">#}
+{#                </th>#}
+{#                <th class="column-title">Invoice</th>#}
+{#                <th class="column-title">Invoice Date</th>#}
+{#                <th class="column-title">Order</th>#}
+{#                <th class="column-title">Bill to Name</th>#}
+{#                <th class="column-title">Status</th>#}
+{#                <th class="column-title">Amount</th>#}
+{#                <th class="column-title no-link last"><span class="nobr">Action</span>#}
+{#                </th>#}
+{#                <th class="bulk-actions" colspan="7">#}
+{#                  <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span>#}
+{#                    ) <i class="fa fa-chevron-down"></i></a>#}
+{#                </th>#}
+{#              </tr>#}
+{#              </thead>#}
+{##}
+{#              <tbody>#}
+{#              <tr class="even pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000040</td>#}
+{#                <td class=" ">May 23, 2014 11:47:56 PM</td>#}
+{#                <td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>#}
+{#                <td class=" ">John Blank L</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$7.45</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="odd pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000039</td>#}
+{#                <td class=" ">May 23, 2014 11:30:12 PM</td>#}
+{#                <td class=" ">121000208 <i class="success fa fa-long-arrow-up"></i>#}
+{#                </td>#}
+{#                <td class=" ">John Blank L</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$741.20</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="even pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000038</td>#}
+{#                <td class=" ">May 24, 2014 10:55:33 PM</td>#}
+{#                <td class=" ">121000203 <i class="success fa fa-long-arrow-up"></i>#}
+{#                </td>#}
+{#                <td class=" ">Mike Smith</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$432.26</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="odd pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000037</td>#}
+{#                <td class=" ">May 24, 2014 10:52:44 PM</td>#}
+{#                <td class=" ">121000204</td>#}
+{#                <td class=" ">Mike Smith</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$333.21</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="even pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000040</td>#}
+{#                <td class=" ">May 24, 2014 11:47:56 PM</td>#}
+{#                <td class=" ">121000210</td>#}
+{#                <td class=" ">John Blank L</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$7.45</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="odd pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000039</td>#}
+{#                <td class=" ">May 26, 2014 11:30:12 PM</td>#}
+{#                <td class=" ">121000208 <i class="error fa fa-long-arrow-down"></i>#}
+{#                </td>#}
+{#                <td class=" ">John Blank L</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$741.20</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="even pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000038</td>#}
+{#                <td class=" ">May 26, 2014 10:55:33 PM</td>#}
+{#                <td class=" ">121000203</td>#}
+{#                <td class=" ">Mike Smith</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$432.26</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="odd pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000037</td>#}
+{#                <td class=" ">May 26, 2014 10:52:44 PM</td>#}
+{#                <td class=" ">121000204</td>#}
+{#                <td class=" ">Mike Smith</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$333.21</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{##}
+{#              <tr class="even pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000040</td>#}
+{#                <td class=" ">May 27, 2014 11:47:56 PM</td>#}
+{#                <td class=" ">121000210</td>#}
+{#                <td class=" ">John Blank L</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$7.45</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              <tr class="odd pointer">#}
+{#                <td class="a-center ">#}
+{#                  <input type="checkbox" class="flat" name="table_records">#}
+{#                </td>#}
+{#                <td class=" ">121000039</td>#}
+{#                <td class=" ">May 28, 2014 11:30:12 PM</td>#}
+{#                <td class=" ">121000208</td>#}
+{#                <td class=" ">John Blank L</td>#}
+{#                <td class=" ">Paid</td>#}
+{#                <td class="a-right a-right ">$741.20</td>#}
+{#                <td class=" last"><a href="#">View</a>#}
+{#                </td>#}
+{#              </tr>#}
+{#              </tbody>#}
+{#            </table>#}
+{#          </div>#}
+{##}
+{##}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+
+{% endblock %}

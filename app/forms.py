@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from app.models import User
@@ -52,3 +52,9 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset password')
+
+
+class SubmitTicketForm(FlaskForm):
+    category = SelectField('Select a category', choices=[('category1', 'category1'), ('category2', 'category2'), ('category3', 'category3')])
+    message = TextAreaField('Message')
+    submit = SubmitField('Submit a new request ticket')

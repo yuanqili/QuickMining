@@ -1,0 +1,61 @@
+{% extends "production/base.html" %}
+
+{% block content %}
+
+  <div class="page-title">
+    <div class="title_left">
+      <h2>Contact Us</h2>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+      <div class="x_panel">
+
+        <div class="x_title">
+          <h3>Submit a new request ticket</h3>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="x_content">
+          <br/>
+
+          <form class="form-horizontal form-label-left">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Select category
+              </label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                {{ form.category(class_="form-control") }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Message*
+              </label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                {{ form.message(class_="form-control", rows="10", resize="resize:none") }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">
+              </label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                {{ form.submit(class_="btn btn-default submit") }}
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

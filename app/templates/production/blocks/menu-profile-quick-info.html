@@ -1,0 +1,9 @@
+<div class="profile clearfix">
+  <div class="profile_pic">
+    <img src="{{ current_user.avatar() }}" alt="..." class="img-circle profile_img">
+  </div>
+  <div class="profile_info">
+    <span>Welcome,</span>
+    <h2>{{ current_user.display_name or current_user.username }}</h2>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+{% extends "production/base.html" %}
+
+{% block content %}
+
+  <div class="page-title">
+    <div class="title_left">
+      <h2>Administrator</h2>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+      <div class="x_panel">
+
+        <div class="x_title">
+          <h3>User management</h3>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="x_content">
+          <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+
+              <thead>
+                <tr class="headings">
+                  <th class="column-title">ID</th>
+                  <th class="column-title">Username</th>
+                  <th class="column-title">Display name</th>
+                  <th class="column-title">Email</th>
+                  <th class="column-title">Contract</th>
+                  <th class="column-title">Admin</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for user in users %}
+                  <tr class="pointer">
+                    <td class="">{{ user.id }}</td>
+                    <td class="">{{ user.username }}</td>
+                    <td class="">{{ user.display_name }}</td>
+                    <td class="">{{ user.email }}</td>
+                    <td class="">{{ user.level_id }}</td>
+                    <td class="">{{ user.is_admin }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+
+            </table>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+      <div class="x_panel">
+
+        <div class="x_title">
+          <h3>Contracts management</h3>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="x_content">
+          <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+
+              <thead>
+                <tr class="headings">
+                  <th class="column-title">ID</th>
+                  <th class="column-title">Contract name</th>
+                  <th class="column-title">Hash rate</th>
+                  <th class="column-title">Profit rate</th>
+                  <th class="column-title">Affiliate bonus</th>
+                  <th class="column-title">Subscription price</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for contract in contracts %}
+                  <tr class="pointer">
+                    <td class="">{{ contract.id }}</td>
+                    <td class="">{{ contract.title }}</td>
+                    <td class="">{{ contract.hash_rate }}</td>
+                    <td class="">{{ contract.profit_rate }}</td>
+                    <td class="">{{ contract.affiliate_bonus }}</td>
+                    <td class="">{{ contract.price }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+
+            </table>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

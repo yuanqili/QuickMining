@@ -1,0 +1,99 @@
+2018-02-07 18:13:49,683 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-07 18:16:11,745 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-07 18:16:43,366 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-07 18:16:58,886 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-07 18:17:21,343 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-07 19:16:21,123 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:14:57,727 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:15:06,208 ERROR: Exception on /site_map [GET] [in /Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/yuanqili/Develop/ModernFlask/app/routes.py", line 139, in site_map
+    line = urllib.unquote("{:50s} {:20s} {}".format(rule.endpoint, methods, url))
+AttributeError: module 'urllib' has no attribute 'unquote'
+2018-02-15 06:15:46,239 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:16:17,170 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:17:05,960 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:17:07,696 ERROR: Exception on /site_map [GET] [in /Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1725, in make_response
+    raise ValueError('View function did not return a response')
+ValueError: View function did not return a response
+2018-02-15 06:17:21,361 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:20:11,002 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 06:20:27,971 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:40:00,633 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:43:12,738 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:46:29,111 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:47:03,792 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:47:14,798 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:48:09,304 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:48:32,070 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:48:33,348 ERROR: Exception on /admin [GET] [in /Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/yuanqili/Develop/ModernFlask/app/routes.py", line 132, in admin
+    return render_template('production/index.html')
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/yuanqili/Develop/ModernFlask/app/templates/production/index.html", line 31, in top-level template code
+    <link rel="stylesheet" href="{{ url_for('templates', filename='/build/css/custom.css') }}">
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/Users/yuanqili/Develop/ModernFlask/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1768, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'templates' with values ['filename']. Did you mean 'static' instead?
+2018-02-15 12:48:59,363 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:51:54,885 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:53:24,097 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:53:56,092 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-15 12:55:35,462 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-22 00:36:55,806 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-22 00:57:20,723 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-22 00:59:07,847 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-22 01:03:48,411 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]
+2018-02-22 01:14:24,436 INFO: ModernFlask startup [in /Users/yuanqili/Develop/ModernFlask/app/__init__.py:70]

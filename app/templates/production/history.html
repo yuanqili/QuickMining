@@ -1,0 +1,77 @@
+{% extends "production/base.html" %}
+
+{% block content %}
+
+  <div class="page-title">
+    <div class="title_left">
+      <h2>Account Details</h2>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <!-- account details --->
+  <div class="row tile_count">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="col-md-3 col-sm-3 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-tachometer"></i> Hash Rate (TH/s)</span>
+        <div class="count">{{ current_user.level.hash_rate }}</div>
+  {#      <span class="count_bottom"><i class="green">4% </i> From last Week</span>#}
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Approximate Profit (STC/d)</span>
+        <div class="count">{{ current_user.level.profit_rate }}</div>
+  {#      <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>#}
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-dot-circle-o"></i> Affiliate Bonus</span>
+        <div class="count">{{ current_user.level.affiliate_bonus * 100 }} %</div>
+  {#      <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>#}
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-credit-card"></i> Current Balance (STC)</span>
+        <div class="count green">{{ current_user.credit }}</div>
+  {#      <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>#}
+      </div>
+    </div>
+  </div>
+  <!-- /account details --->
+
+  <!-- transaction history --->
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+
+        <div class="x_title">
+          <h3>Transaction History</h3>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="x_content">
+          <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+              <thead>
+              <tr class="headings">
+                <th class="column-title">Head 1</th>
+                <th class="column-title">Head 2</th>
+                <th class="column-title">Head 3</th>
+                <th class="column-title">Head 4</th>
+                <th class="column-title">Head 5</th>
+                <th class="column-title">Head 6</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              </tbody>
+
+            </table>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- transaction history --->
+{% endblock %}
